@@ -12,7 +12,7 @@
 ;;; Code:
 
 ;; Setup lsp-mode for C/C++ development
-(use-package ls-mode
+(use-package lsp-mode
   :ensure t
   :hook ((c-mode c++-mode) .lsp)
   :commands lsp)
@@ -27,11 +27,6 @@
   :ensure t
   :hook (after-init . global-company-mode))
 
-;; Setup company-lsp for lsp-mode integration with company-mode
-(use-package company-lsp
-  :ensure t
-  :commands company-lsp)
-
 ;; Setup flycheck for on-the-fly syntax checking
 (use-package flycheck
   :ensure t
@@ -45,10 +40,9 @@
   :config
   (yas-global-mode 1))
 
-;; Setup cmake-mode for CMake files
+;; Setup cmake-mode
 (use-package cmake-mode
-  :ensure t
-  :mode ("CMakeLists\\.txt\\'" "\\.cmake\\'"))
+  :ensure t)
 
 (provide 'c-cpp-config)
 

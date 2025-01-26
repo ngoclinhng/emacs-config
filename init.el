@@ -10,8 +10,12 @@
 
 ;;; Code:
 
+;; Fix: Failed to download ‘melpa’ archive.
+;; flycheck-disable-next-line
+(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+
 (require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages") t)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
 
 (unless (package-installed-p 'use-package)
@@ -29,7 +33,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages '(iedit undo-tree)))
+ '(package-selected-packages
+   '(lsp-mode cmake-mode company-lsp lsp-ui ls-mode iedit undo-tree)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
