@@ -8,6 +8,16 @@
 ;; C/C++ IDE, including language server support, code completion, syntax
 ;; checking, and more.
 ;;
+;; IMPORTANT:
+;;
+;; 1. Use `compile-command.json' to configure `lsp-mode' in Cmake projects.
+;;    The `compile-command.json' can be generated with the following commands:
+;;    mkdir build
+;;    cd build
+;;    cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON ..
+;;
+;; 2. See `lsp-mode' documentation for custom configuration for `clangd'.
+;;    More information can be found at: https://clangd.llvm.org/
 
 ;;; Code:
 
