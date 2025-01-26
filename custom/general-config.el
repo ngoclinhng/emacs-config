@@ -54,7 +54,7 @@
 (global-set-key (kbd "C-a")
                 (lambda ()
                   (interactive)
-                  (let ((orig-point (point)))                    
+                  (let ((orig-point (point)))
                     (back-to-indentation)
                     (when (= orig-point (point))
                       (move-beginning-of-line 1)))))
@@ -69,6 +69,9 @@
 (use-package iedit
   :ensure t
   :bind ("C-;" . iedit-mode))
+
+;; Automatically remove trailing whitespace before saving a file
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 (provide 'general-config)
 

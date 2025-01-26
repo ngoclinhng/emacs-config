@@ -1,3 +1,15 @@
+;;; init.el --- Custom Configuration for Emacs
+;;
+;; Author: lynhngoc88@gmail.com
+
+
+;;; Commentary:
+;;
+;; Emacs init file
+;;
+
+;;; Code:
+
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages") t)
 (package-initialize)
@@ -10,6 +22,7 @@
 
 (require 'general-config)
 (require 'project-config)
+(require 'c-cpp-config)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -23,3 +36,5 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+;;; init.el ends here
