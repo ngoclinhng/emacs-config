@@ -34,3 +34,54 @@ asdf install erlang <version>
 
 For more details on configuring `KERL_CONFIGURE_OPTIONS` (in case you encounter issues with `OpenSSL`, `JavaC`, `odbc`, etc.),
 visit the [ASDF Erlang Plugin](https://github.com/asdf-vm/asdf-erlang)
+
+
+#### 3. Install elixir
+
+Add the Elixir plugin to `asdf`:
+
+```sh
+asdf plugin add elixir https://github.com/asdf-vm/asdf-elixir.git
+```
+
+List all available elixir versions with:
+
+```sh
+asdf list-all elixir
+```
+
+Install the desired version of Elixir:
+
+```sh
+asdf install elixir <version>
+```
+
+#### 4. Final touch
+
+Once `erlang` and `elixir` are installed successfully, you can set the versions globally or locally:
+
+-**Globally**:
+
+```sh
+asdf global <name> <version>
+```
+
+This will add entries to `$HOME/.tool-versions`.
+
+-**Locally**:
+
+```sh
+asdf local <name> <version>
+```
+
+This will add entries to `$PWD/.tool-versions`.
+
+Verify the installations by running:
+- `iex` for the elixir REPL
+- `erl` for the erlang REPL
+
+If you work with Phoenix, you can install Phoenix application generator with:
+
+```sh
+mix archive.install hex phx_new
+```
