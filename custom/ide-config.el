@@ -1,14 +1,15 @@
-;;; c-cpp-config.el --- C/C++ IDE Configuration
+;;; ide-config.el --- Emacs as a powerful IDE.
 ;;
 ;; Author: lynhngoc88@gmail.com
 
 ;;; Commentary:
 ;;
 ;; This file contains configuration settings to turn Emacs into a powerful
-;; C/C++ IDE, including language server support, code completion, syntax
-;; checking, and more.
+;; IDE that support languages such as C/C++, elixir/phoenix...etc
+;; It includes language server support, code completion, syntax checking,
+;; and more.
 ;;
-;; IMPORTANT:
+;; IMPORTANT (for C/C++-mode):
 ;;
 ;; 1. Use `compile-command.json' to configure `lsp-mode' in Cmake projects.
 ;;    The `compile-command.json' can be generated with the following commands:
@@ -21,10 +22,17 @@
 
 ;;; Code:
 
-;; Setup lsp-mode for C/C++ development
+;; Elixir mode using Treesitter for fontification, navigation and
+;; indentation
+(use-package elixir-ts-mode
+  :ensure t)
+
+;; Setup lsp-mode for C/C++/elixir development
 (use-package lsp-mode
   :ensure t
-  :hook ((c-mode c++-mode) .lsp)
+  :hook ((c-mode c++-mode elixir-ts-mode) .lsp)
+  :init (add-to-list 'exec-path "~/elixir-ls" t)
+  :config (setq-default lsp-elixir-suggest-specs nil)
   :commands lsp)
 
 ;; Setup lsp-ui for better UI integration with lsp-mode
@@ -54,6 +62,6 @@
 (use-package cmake-mode
   :ensure t)
 
-(provide 'c-cpp-config)
+(provide 'ide-config)
 
-;;; c-cpp-config.el ends here
+;;; ide-config.el ends here

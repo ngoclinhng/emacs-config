@@ -11,8 +11,7 @@
 ;;; Code:
 
 ;; Fix: Failed to download ‘melpa’ archive.
-;; flycheck-disable-next-line
-(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+(setq-default gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
@@ -26,7 +25,7 @@
 
 (require 'general-config)
 (require 'project-config)
-(require 'c-cpp-config)
+(require 'ide-config)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
