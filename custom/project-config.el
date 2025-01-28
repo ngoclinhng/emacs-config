@@ -17,6 +17,11 @@
   :bind (:map projectile-mode-map
               ("s-p" . projectile-command-map)))
 
+(use-package helm
+  :ensure t
+  :config
+  (helm-mode 1))
+
 (use-package magit
   :ensure t
   :bind ("C-x g" . magit-status))
