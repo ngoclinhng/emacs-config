@@ -22,6 +22,24 @@
 
 ;;; Code:
 
+(require 'tree-sitter-setup)
+
+;; Turn `c-mode' into `c-ts-mode'
+(add-hook 'c-mode-hook
+          (lambda ()
+            (when (derived-mode-p 'c-mode)
+              (ensure-tree-sitter-grammar-installed 'c)
+              (ensure-tree-sitter-grammar-installed 'cpp)
+              (c-ts-mode))))
+
+;; Turn `c++-mode' into `c++-ts-mode'
+(add-hook 'c++-mode-hook
+          (lambda ()
+            (when (derived-mode-p 'c++-mode)
+              (ensure-tree-sitter-grammar-installed 'c)
+              (ensure-tree-sitter-grammar-installed 'cpp)
+              (c++-ts-mode))))
+
 ;; Elixir mode using Treesitter for fontification, navigation and
 ;; indentation
 (use-package elixir-ts-mode
@@ -30,7 +48,11 @@
 ;; Setup lsp-mode for C/C++/elixir development
 (use-package lsp-mode
   :ensure t
-  :hook ((c-mode c++-mode elixir-ts-mode) .lsp)
+  :hook ((c-mode . lsp)
+         (c-ts-mode . lsp)
+         (c++-mode . lsp)
+         (c++-ts-mode . lsp)
+         (elixir-ts-mode . lsp))
   :init (add-to-list 'exec-path "~/elixir-ls" t)
   :config (setq-default lsp-elixir-suggest-specs nil)
   :commands lsp)
