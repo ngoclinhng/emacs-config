@@ -84,6 +84,11 @@
 (use-package cmake-mode
   :ensure t)
 
+;; dotenv
+(use-package dotenv-mode
+  :ensure t
+  :mode ("\\.env\\..*\\'" . dotenv-mode))
+
 (provide 'ide-config)
 
 ;;; ide-config.el ends here
