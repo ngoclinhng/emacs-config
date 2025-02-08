@@ -26,6 +26,11 @@
 (require 'general-config)
 (require 'project-config)
 (require 'ide-config)
+(require 'auctex-config)
+
+;; SLIME
+(load (expand-file-name "~/.quicklisp/slime-helper.el"))
+(setq inferior-lisp-program "sbcl")
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
