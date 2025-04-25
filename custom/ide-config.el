@@ -1,13 +1,6 @@
 ;;; ide-config.el --- Emacs as a powerful IDE.
-;;
-;; Author: lynhngoc88@gmail.com
 
 ;;; Commentary:
-;;
-;; This file contains configuration settings to turn Emacs into a powerful
-;; IDE that support languages such as C/C++, elixir/phoenix...etc
-;; It includes language server support, code completion, syntax checking,
-;; and more.
 ;;
 ;; IMPORTANT (for C/C++-mode):
 ;;
@@ -40,56 +33,70 @@
               (ensure-tree-sitter-grammar-installed 'cpp)
               (c++-ts-mode))))
 
-;; Elixir mode using Treesitter for fontification, navigation and
-;; indentation
-(use-package elixir-ts-mode
-  :ensure t)
-
-;; Setup lsp-mode for C/C++/elixir development
+;; LSP Mode for intelligent code navigation and completion
 (use-package lsp-mode
   :ensure t
-  :hook ((c-mode . lsp)
-         (c-ts-mode . lsp)
-         (c++-mode . lsp)
-         (c++-ts-mode . lsp)
-         (elixir-ts-mode . lsp)
-         (typescript-ts-mode . lsp)
-         (tsx-ts-mode . lsp))
-  :init (add-to-list 'exec-path "~/elixir-ls" t)
-  :config (setq-default lsp-elixir-suggest-specs nil)
-  :commands lsp)
+  :defer t
+  :hook ((c-mode . lsp-deferred)
+         (c-ts-mode . lsp-deferred)
+         (c++-mode . lsp-deferred)
+         (c++-ts-mode . lsp-deferred)
+         (elixir-ts-mode . lsp-deferred))
+  :config
+  ;; Optimize LSP performance
+  (setq lsp-idle-delay 0.3
+        lsp-log-io nil
+        lsp-enable-symbol-highlighting t)
+  :commands (lsp lsp-deferred))
 
-;; Setup lsp-ui for better UI integration with lsp-mode
+;; LSP UI for enhanced visuals
 (use-package lsp-ui
   :ensure t
-  :commands lsp-ui-mode)
+  :defer t
+  :hook (lsp-mode . lsp-ui-mode)
+  :config
+  (setq lsp-ui-sideline-show-diagnostics t
+        lsp-ui-sideline-show-hover t
+        lsp-ui-doc-position 'at-point
+        lsp-ui-peek-always-show t))
 
-;; Setup company for code completion
+;; Company for code completion
 (use-package company
   :ensure t
-  :hook (after-init . global-company-mode))
+  :defer t
+  :hook (after-init . global-company-mode)
+  :config
+  (setq company-idle-delay 0.1
+        company-minimum-prefix-length 1
+        company-backends '(company-capf company-files company-dabbrev))
+  ;; Integrate with LSP
+  (add-to-list 'company-backends 'company-capf))
 
-;; Setup flycheck for on-the-fly syntax checking
+;; Flycheck for syntax checking
 (use-package flycheck
   :ensure t
-  :init (global-flycheck-mode)
+  :defer t
+  :hook (after-init . global-flycheck-mode)
   :config
-  (setq-default flycheck-emacs-lisp-load-path 'inherit))
+  (setq flycheck-emacs-lisp-load-path 'inherit
+        flycheck-check-syntax-automatically '(save mode-enabled)))
 
-;; Setup yasnippet for code snippets
+;; Yasnippet for code snippets
 (use-package yasnippet
   :ensure t
+  :defer t
+  :hook (prog-mode . yas-minor-mode)
   :config
-  (yas-global-mode 1))
+  (yas-reload-all)
+  ;; Integrate with company
+  (use-package yasnippet-snippets
+    :ensure t))
 
-;; Setup cmake-mode
+;; CMake Mode for CMake files
 (use-package cmake-mode
-  :ensure t)
-
-;; dotenv
-(use-package dotenv-mode
   :ensure t
-  :mode ("\\.env\\..*\\'" . dotenv-mode))
+  :defer t
+  :mode ("CMakeLists\\.txt\\'" "\\.cmake\\'"))
 
 (provide 'ide-config)
 
